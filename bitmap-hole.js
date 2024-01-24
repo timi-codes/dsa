@@ -1,8 +1,9 @@
-
 function BitmapHole(strArr){
   
   let grid = []
   let positions = []
+  let directions=[[1, 0], [-1, 0], [0, 1], [0, -1]]
+  
   // Step 1: Convert strArr to a grid matrix 
     for(let i=0; i<strArr.length; i++){
       grid.push(strArr[i].split(""))
@@ -20,7 +21,24 @@ function BitmapHole(strArr){
   //Step 3: Group by rows
   
   
-  //Step 3: Based on the positions check which are next to each other and are sequential.
+  //Step 3: Based on the positions check which are adjacent
+  function findContinousRegion(row, column){
+    if ((row < 0 || row >= grid.length) || (column < 0 || column >= grid[0].length) || (grid[row][column] === '1')) return;
+    
+    //visited position of 0's
+    grid[row][column] = '1';
+
+    // for(let dir=0; dir<directions.length; dir++){
+    //   findContinousRegion(row + dir, column + dir)
+    // }
+    
+    findContinousRegion(row - 1, column) //UP
+    findContinousRegion(row + 1, column) //DOWN
+    findContinousRegion(row, column - 1) //LEFT
+    findContinousRegion(row, column + 1) ////RIGHT
+
+    
+  }
   
   
   let count = 0;
@@ -28,50 +46,14 @@ function BitmapHole(strArr){
   for(index=0; index < positions.length; index++) {
     const [row, column] = positions[index]
     
-    grid[row][column] = "-"
-    
-    //Check Right
-    if(grid[row][column] === grid[row][column + 1]){
-      count = count + 1
-      // grid[row][column + 1] = "-"
-      
-      console.log(`Print Grid \n`, grid)
-    }
-    
-    //Check Left
-    if(grid[row][column] === grid[row][column - 1]){
-      count = count + 1
-      // grid[row][column - 1] = "-"
-      console.log(`Print Grid \n`, grid)
-    }
-    
-    //Check Top
-    if(grid[row - 1] && grid[row][column] === grid[row - 1][column]){
-      count = count + 1
-      // grid[row - 1][column] = "-"
-        console.log(`Print Grid \n`, grid)
-    }
-    
-    //Check Bottom
-    if(grid[row + 1] && grid[row][column] === grid[row + 1][column]){
-      count = count + 1
-      // grid[row + 1][column] = "-"
-        console.log(`Print Grid \n`, grid)
+    if(grid[row][column] === '0'){
+        count = count + 1
+        findContinousRegion(row, column)
     }
   }
   
   console.log(count)
 
   
-  return strArr;
+  return count
 }
-
-
-const strArr1 = ["01111", "01101", "00011", "11110"]
-const strArr2 = ["1011", "0010"]
-const strArr3 = ["110", "000", "111"]
-
-
-BitmapHole(strArr3)
-
-
