@@ -36,8 +36,6 @@ function BitmapHole(strArr){
     findContinousRegion(row + 1, column) //DOWN
     findContinousRegion(row, column - 1) //LEFT
     findContinousRegion(row, column + 1) ////RIGHT
-
-    
   }
   
   
