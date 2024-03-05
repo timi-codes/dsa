@@ -4,6 +4,7 @@ class Solution:
     """
     Find the max of the sum of subarray of fixed size k
     [4, 2, 1, 7, 8, 1, 2, 8, 1, 0]
+    O(n)
     """
     def findMaxSumOfSubArray(self, arr, k):
         maxValue = ~sys.maxsize #smallest represenattion of int
