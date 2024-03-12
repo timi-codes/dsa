@@ -1,25 +1,25 @@
 class Solution:
-    """
+    """abcdefgh
     Find the Longest substring without Repeating Character
-    pwwkew
+    abcabcbb
     O(n)
     """
     def lengthOfLongestSubstring(self, s: str) -> int:
-        dict = {}
+        my_dict = {}
         distinctCharLen = 0
         windowStart = 0
 
         for windowEnd, char in enumerate(s):
 
-            # distinctCharLen += 1
+            while char in my_dict:
+                del my_dict[s[windowStart]]
+                windowStart += 1
 
-            while char in dict:
-                del dict[char]
+            if char not in my_dict:
+                my_dict[char] = 1
+                distinctCharLen = max(distinctCharLen, (windowEnd - windowStart) + 1)
 
-            if char not in  dict: dict[char] = 1
-  
-        print(dict)
-        return len(dict)
+        return distinctCharLen
        
 
 
