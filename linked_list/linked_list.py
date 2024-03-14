@@ -102,8 +102,19 @@ class LinkedList:
         position = 0
 
         while current and not found:
-            previous = current
-            current = current.next_node
+            if position == index and current == self.head:
+                self.head = current.next_node
+                found = True
+            elif position == index:
+                previous.next_node = current.next_node
+                found = True
+            else:
+                previous = current
+                current = current.next_node
+
+            position += 1
+        return current
+
 
         
         
