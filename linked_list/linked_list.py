@@ -114,9 +114,6 @@ class LinkedList:
 
             position += 1
         return current
-
-
-        
         
     def nodeAtIndex(self, index):
         current = self.head
@@ -130,6 +127,41 @@ class LinkedList:
             position += 1
 
         return current
+
+    def addAt(self, index, data):
+        node = Node(data)
+
+        if not self.head and index == 0:
+            self.head = node
+            return self.head
+        
+        if index < 0 or index >= self.size():
+            return "<Error: Out of range Index>"
+        
+        if index == 0:
+            node.next_node = self.head.next_node
+            self.head = node
+
+            return self.head
+
+        currentNode = self.head
+        prevNode = None
+        position = 0
+        found = False
+    
+        while currentNode.next_node and not found:
+            if position == index:
+                node.next_node = currentNode
+                prevNode.next_node = node
+                found = True
+            else:
+                prevNode = currentNode
+                currentNode = currentNode.next_node
+                position += 1
+
+        return currentNode
+
+             
 
     def __repr__(self):
         """
