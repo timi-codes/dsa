@@ -42,5 +42,45 @@ class Node:
         if self.right !=None:
             self.right.printInOrder()
 
+    def getFullNodeCount(root):
+        """
+        Using level-order traversal 
+        """
+        if root == None: return 0
 
+        queue = [root]
+        count = 0
+
+        while len(queue) != 0:
+            current = queue.pop(0)
+
+            if current.left and current.right:
+                count +=1
+
+            if current.left:
+                queue.append(current.left)
             
+            if current.right:
+                queue.append(current.right)
+        
+        return count
+    
+#         2
+#     /      \
+#   7         5
+#   \          \
+#   6          9
+#  / \        /
+# 1  11      4
+root = Node(2)
+
+root.left = Node(7)
+root.left.right = Node(6)
+root.left.right.left = Node(1)
+root.left.right.right = Node(11)
+
+root.right = Node(5)
+root.right.right = Node(9)
+root.right.right.left = Node(4)
+
+print(Node.getFullNodeCount(root))
