@@ -44,7 +44,7 @@ class Node:
 
     def getFullNodeCount(root):
         """
-        Using level-order traversal 
+        Using level-order traversal method
         """
         if root == None: return 0
 
@@ -65,6 +65,30 @@ class Node:
         
         return count
     
+    def getFullNodeCount_Recursive(root):
+        """
+        Using depth-first postorder approach
+        """
+        if root == None: 
+            return 0
+        
+        count = 0
+
+        if root.left and root.right:
+            count += 1
+
+        if root.left or root.right:                
+            count += Node.getFullNodeCount_Recursive(root.left) + Node.getFullNodeCount_Recursive(root.right)
+        
+        return count
+    
+    def getDepth(root):
+        if root == None: 
+            return 0
+        
+
+
+
 #         2
 #     /      \
 #   7         5
@@ -83,4 +107,4 @@ root.right = Node(5)
 root.right.right = Node(9)
 root.right.right.left = Node(4)
 
-print(Node.getFullNodeCount(root))
+print(Node.getFullNodeCount_Recursive(root))
