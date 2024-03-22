@@ -68,6 +68,8 @@ class Node:
     def getFullNodeCount_Recursive(root):
         """
         Using depth-first postorder approach
+        TC: O(n)
+        SC: O(n)
         """
         if root == None: 
             return 0
@@ -82,29 +84,97 @@ class Node:
         
         return count
     
-    def getDepth(root):
+    def getDepthWithLevelOrder(root):
         if root == None: 
             return 0
         
+        queue = [root, None]
+        depth = 0
+
+        while len(queue) > 0:
+            current = queue.pop(0)
+
+            if current == None:
+                depth += 1
 
 
+            if current != None:
+                if current.left:
+                    queue.append(current.left)
 
-#         2
-#     /      \
-#   7         5
-#   \          \
-#   6          9
-#  / \        /
-# 1  11      4
-root = Node(2)
+                if current.right:
+                    queue.append(current.right)   
 
-root.left = Node(7)
-root.left.right = Node(6)
-root.left.right.left = Node(1)
-root.left.right.right = Node(11)
+            elif len(queue) > 0:
+                queue.append(None)
 
-root.right = Node(5)
-root.right.right = Node(9)
-root.right.right.left = Node(4)
 
-print(Node.getFullNodeCount_Recursive(root))
+            print(queue)
+
+        return depth
+
+    def getDepthWithRecursion(root):
+        if root is None: 
+            return 0
+        
+        left = Node.getDepthWithRecursion(root.left)
+        right = Node.getDepthWithRecursion(root.right)
+        
+        return 1 + max(left, right)
+
+    def inverse(self, node):
+        if node is None:
+            return None
+
+        right = self.inverse(node.right)
+        left = self.inverse(node.left)
+
+        node.right = left
+        node.left = right
+
+
+def testData1():
+    #        15
+    #     /      \
+    #   10       20
+    #   \        /
+    #   12      17
+    #  /  \      \
+    # 11  14     18
+    #            /
+    #           16
+    root = Node(15)
+
+    root.left = Node(10)
+    root.left.right = Node(12)
+    root.left.right.left = Node(10)
+    root.left.right.right = Node(14)
+
+    root.right = Node(20)
+    root.right.left = Node(17)
+    root.right.left.right = Node(18)
+    root.right.left.right.left = Node(16)
+
+    return root
+
+def testData2():
+    #        1
+    #       / \
+    #      2  3
+    #     /\
+    #    4 5
+    root = Node(1)
+
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+
+    return root
+
+testDataRoot1 = testData1()
+testDataRoot2 = testData2()
+
+print(testDataRoot1.printInOrder())
+testDataRoot1.inverse(testDataRoot1)
+print(testDataRoot1.printInOrder())
